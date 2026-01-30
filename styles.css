@@ -1,0 +1,393 @@
+:root {
+  color-scheme: light;
+  --bg-1: #f2e2c2;
+  --bg-2: #c88852;
+  --bg-3: #8f5730;
+  --ink: #2b1a10;
+  --ink-soft: #4d3728;
+  --accent: #b33f2e;
+  --panel: #fbf5e9;
+  --panel-edge: #d5b591;
+  --shadow: rgba(27, 17, 11, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Spectral", "Baskerville", "Georgia", serif;
+  color: var(--ink);
+  background: radial-gradient(circle at top, #fdf7ea, var(--bg-1) 40%, var(--bg-2) 75%, var(--bg-3));
+  display: flex;
+  justify-content: center;
+  padding: 32px 20px 64px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.35), transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(255, 229, 180, 0.4), transparent 55%),
+    repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.03) 0 2px, transparent 2px 8px);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.page {
+  width: min(1000px, 100%);
+  display: grid;
+  gap: 28px;
+  animation: rise 0.8s ease-out;
+}
+
+.hero {
+  text-align: left;
+  display: grid;
+  gap: 10px;
+}
+
+.eyebrow {
+  font-family: "Space Grotesk", "Trebuchet MS", "Gill Sans", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(36px, 6vw, 56px);
+  margin: 0;
+  line-height: 1;
+}
+
+.subtitle {
+  margin: 0;
+  font-family: "Space Grotesk", "Trebuchet MS", "Gill Sans", sans-serif;
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+
+.board-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.board-wrap {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 18px 40px var(--shadow);
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 2px solid #8b5d34;
+  display: block;
+  background: #d9b37a;
+  touch-action: none;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 18px;
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+  box-shadow: 0 12px 30px rgba(84, 54, 32, 0.2);
+  font-family: "Space Grotesk", "Trebuchet MS", "Gill Sans", sans-serif;
+  animation: fadeIn 0.9s ease-out;
+}
+
+.status {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+button {
+  border: none;
+  background: var(--accent);
+  color: #fff6e9;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 10px 18px rgba(179, 63, 46, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 22px rgba(179, 63, 46, 0.3);
+}
+
+.legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.chip.black {
+  background: #1a1a1a;
+  color: #f8e9d2;
+}
+
+.chip.white {
+  background: #ffffff;
+  color: #4b3323;
+}
+
+.hint {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 860px) {
+  .board-card {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    order: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 24px 16px 48px;
+  }
+
+  .board-wrap {
+    padding: 12px;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+}
+
+/* 開始畫面樣式 */
+.start-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 26, 16, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.start-screen.hidden {
+  display: none;
+}
+
+.start-card {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 24px;
+  padding: 40px 48px;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(27, 17, 11, 0.5);
+  animation: rise 0.5s ease-out;
+  max-width: 400px;
+  width: 90%;
+}
+
+.start-card h2 {
+  font-size: 42px;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.start-subtitle {
+  font-family: "Space Grotesk", "Trebuchet MS", "Gill Sans", sans-serif;
+  font-size: 16px;
+  color: var(--ink-soft);
+  margin: 0 0 28px;
+}
+
+.mode-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mode-selection.hidden {
+  display: none;
+}
+
+.mode-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 24px;
+  background: var(--accent);
+  border: none;
+  border-radius: 14px;
+  color: #fff6e9;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 20px rgba(179, 63, 46, 0.3);
+}
+
+.mode-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(179, 63, 46, 0.4);
+}
+
+.mode-icon {
+  font-size: 24px;
+}
+
+.mode-label {
+  font-family: "Space Grotesk", "Trebuchet MS", "Gill Sans", sans-serif;
+}
+
+.difficulty-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.difficulty-selection.hidden {
+  display: none;
+}
+
+.difficulty-title {
+  font-family: "Space Grotesk", "Trebuchet MS", "Gill Sans", sans-serif;
+  font-size: 16px;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.difficulty-btn {
+  flex: 1;
+  padding: 14px 16px;
+  background: var(--accent);
+  border: none;
+  border-radius: 12px;
+  color: #fff6e9;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Space Grotesk", "Trebuchet MS", "Gill Sans", sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 6px 16px rgba(179, 63, 46, 0.25);
+}
+
+.difficulty-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(179, 63, 46, 0.35);
+}
+
+.difficulty-btn[data-difficulty="easy"] {
+  background: #5a9e5a;
+  box-shadow: 0 6px 16px rgba(90, 158, 90, 0.3);
+}
+
+.difficulty-btn[data-difficulty="easy"]:hover {
+  box-shadow: 0 10px 22px rgba(90, 158, 90, 0.4);
+}
+
+.difficulty-btn[data-difficulty="medium"] {
+  background: #d4a03a;
+  box-shadow: 0 6px 16px rgba(212, 160, 58, 0.3);
+}
+
+.difficulty-btn[data-difficulty="medium"]:hover {
+  box-shadow: 0 10px 22px rgba(212, 160, 58, 0.4);
+}
+
+.difficulty-btn[data-difficulty="hard"] {
+  background: #c44d3a;
+  box-shadow: 0 6px 16px rgba(196, 77, 58, 0.3);
+}
+
+.difficulty-btn[data-difficulty="hard"]:hover {
+  box-shadow: 0 10px 22px rgba(196, 77, 58, 0.4);
+}
+
+.back-btn {
+  margin-top: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid var(--ink-soft);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Space Grotesk", "Trebuchet MS", "Gill Sans", sans-serif;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  box-shadow: none;
+}
+
+.back-btn:hover {
+  background: var(--ink-soft);
+  color: var(--panel);
+  transform: none;
+  box-shadow: none;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>五子棋 Gomoku</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- 開始畫面 -->
+    <div id="start-screen" class="start-screen">
+      <div class="start-card">
+        <h2>五子棋</h2>
+        <p class="start-subtitle">選擇遊戲模式</p>
+
+        <div id="mode-selection" class="mode-selection">
+          <button id="btn-pvp" class="mode-btn" type="button">
+            <span class="mode-icon">👥</span>
+            <span class="mode-label">雙人對弈</span>
+          </button>
+          <button id="btn-pve" class="mode-btn" type="button">
+            <span class="mode-icon">🤖</span>
+            <span class="mode-label">對戰電腦</span>
+          </button>
+        </div>
+
+        <div id="difficulty-selection" class="difficulty-selection hidden">
+          <p class="difficulty-title">選擇難度</p>
+          <div class="difficulty-buttons">
+            <button id="btn-easy" class="difficulty-btn" type="button" data-difficulty="easy">簡單</button>
+            <button id="btn-medium" class="difficulty-btn" type="button" data-difficulty="medium">中等</button>
+            <button id="btn-hard" class="difficulty-btn" type="button" data-difficulty="hard">困難</button>
+          </div>
+          <button id="btn-back" class="back-btn" type="button">返回</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page">
+      <header class="hero">
+        <p class="eyebrow">GOMOKU CLASSIC</p>
+        <h1>五子棋</h1>
+        <p class="subtitle">本地雙人對弈，先連成五子者勝。</p>
+      </header>
+
+      <main class="board-card">
+        <div class="board-wrap">
+          <canvas id="board" aria-label="Gomoku board" role="img"></canvas>
+        </div>
+
+        <aside class="panel">
+          <div id="status" class="status">黑棋回合</div>
+          <div class="controls">
+            <button id="reset" type="button">重新開始</button>
+          </div>
+          <div class="legend">
+            <span class="chip black">黑棋</span>
+            <span class="chip white">白棋</span>
+          </div>
+          <p class="hint">點擊棋盤交點落子。最後一步會高亮顯示。</p>
+        </aside>
+      </main>
+    </div>
+
+    <script src="dist/main.js"></script>
+  </body>
+</html>
